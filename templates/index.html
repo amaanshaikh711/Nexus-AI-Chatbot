@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI Chatbot</title>
+    
+    <!-- Link to the CSS stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Google Fonts for a modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="chat-container">
+        
+        <!-- Chat Header with Title and Clear Button -->
+        <header class="chat-header">
+            <h1>Nexus AI</h1>
+            <a href="/clear" class="clear-chat-btn" title="Clear conversation history">Clear Chat</a>
+        </header>
+        
+        <!-- Main Chat Messages Area -->
+        <main class="chat-messages">
+            <!-- 
+                This is a Jinja2 template loop.
+                It iterates over the 'chat_history' list provided by Flask
+                and creates a message bubble for each item.
+            -->
+            {% for message in chat_history %}
+                
+                <!-- Check if the role is 'user' to apply the user-message style -->
+                {% if message.role == 'user' %}
+                <div class="message user-message">
+                    <!-- The message part is in a list, so we access the first item [0] -->
+                    <p>{{ message.parts[0] | safe }}</p>
+                </div>
+                
+                <!-- Otherwise, it's a 'model' message -->
+                {% else %}
+                <div class="message model-message">
+                    <p>{{ message.parts[0] | safe }}</p>
+                </div>
+                {% endif %}
+                
+            {% endfor %}
+        </main>
+        
+        <!-- Chat Input Form -->
+        <footer class="chat-input-area">
+            <!-- 
+                This form POSTs data to the '/chat' route.
+                The Flask server processes it and then reloads the page.
+            -->
+            <form action="/" method="POST">
+                <input type="text" name="message" placeholder="Type your message to Nexus AI..." autocomplete="off" required>
+                <button type-="submit">Send</button>
+            </form>
+        </footer>
+        
+    </div>
+
+    <script>
+        // Auto-scroll to the bottom of the chat messages
+        window.onload = function() {
+            var chatMessages = document.querySelector('.chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+    </script>
+
+</body>
+</html>
