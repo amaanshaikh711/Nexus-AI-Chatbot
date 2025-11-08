@@ -2,7 +2,7 @@
 
 Nexus AI is a sleek and responsive web-based chatbot powered by the Google Gemini API. It provides a modern and intuitive interface for interacting with the powerful Gemini language models.
 
-![Nexus AI Screenshot](nexus-ai.png)  <!-- Replace with a screenshot of your application -->
+![Nexus AI Screenshot](nexus-ai-1.png)  <!-- Replace with a screenshot of your application -->
 
 ## Features
 
